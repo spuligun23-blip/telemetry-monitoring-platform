@@ -21,13 +21,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      
       - name: Install Databricks CLI
-        run: pip install databricks-cli
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+          export PATH=$PATH:$HOME/.databricks/bin
       
       - name: Deploy to Dev
         working-directory: ./databricks-bundles
@@ -36,7 +33,9 @@ jobs:
           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
           DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
-        run: databricks bundle deploy --target dev
+        run: |
+          export PATH=$PATH:$HOME/.databricks/bin
+          databricks bundle deploy --target dev
           
   deploy-prod:
     name: Deploy to PROD
@@ -47,13 +46,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      
       - name: Install Databricks CLI
-        run: pip install databricks-cli
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+          export PATH=$PATH:$HOME/.databricks/bin
       
       - name: Deploy to Prod
         working-directory: ./databricks-bundles
@@ -62,4 +58,6 @@ jobs:
           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
           DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
-        run: databricks bundle deploy --target prod
+        run: |
+          export PATH=$PATH:$HOME/.databricks/bin
+          databricks bundle deploy --target prod
