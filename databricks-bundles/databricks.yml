@@ -1,0 +1,38 @@
+bundle:
+  name: telemetry-monitoring
+
+targets:
+  dev:
+    mode: development
+    workspace:
+      host: https://adb-7405617333572408.8.azuredatabricks.net
+    
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-7405616246068137.17.azuredatabricks.net
+
+resources:
+  jobs:
+    hello_job:
+      name: ${bundle.target}-hello-job
+      
+      schedule:
+        quartz_cron_expression: "0 0 9 * * ?"  # Daily at 9 AM
+        timezone_id: "America/New_York"
+      
+      tasks:
+        - task_key: say_hello
+          notebook_task:
+            notebook_path: ./src/hello
+            source: WORKSPACE
+          
+          new_cluster:
+            spark_version: 14.3.x-scala2.12
+            node_type_id: Standard_DS3_v2
+            num_workers: 0
+            spark_conf:
+              spark.databricks.cluster.profile: singleNode
+              spark.master: local[*]
+            custom_tags:
+              Environment: ${bundle.target}

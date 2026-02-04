@@ -1,0 +1,65 @@
+name: Deploy to Databricks
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'databricks-bundles/**'
+  
+  push:
+    branches: [main]
+    paths:
+      - 'databricks-bundles/**'
+
+jobs:
+  deploy-dev:
+    name: Deploy to DEV
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install Databricks CLI
+        run: pip install databricks-cli
+      
+      - name: Deploy to Dev
+        working-directory: ./databricks-bundles
+        env:
+          DATABRICKS_HOST: https://adb-7405617333572408.8.azuredatabricks.net
+          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+          DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
+        run: databricks bundle deploy --target dev
+          
+  deploy-prod:
+    name: Deploy to PROD
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install Databricks CLI
+        run: pip install databricks-cli
+      
+      - name: Deploy to Prod
+        working-directory: ./databricks-bundles
+        env:
+          DATABRICKS_HOST: https://adb-7405616246068137.17.azuredatabricks.net
+          DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+          DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+          DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
+        run: databricks bundle deploy --target prod
