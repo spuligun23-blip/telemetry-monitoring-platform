@@ -41,6 +41,7 @@ jobs:
           auth_type = azure-client-secret
           EOF
           
+          export DATABRICKS_BUNDLE_DEPLOYMENT_STATE_PATH=/tmp/bundle-state
           databricks bundle deploy --target dev --force-lock
           
   deploy-prod:
@@ -72,4 +73,5 @@ jobs:
           auth_type = azure-client-secret
           EOF
           
+          export DATABRICKS_BUNDLE_DEPLOYMENT_STATE_PATH=/tmp/bundle-state
           databricks bundle deploy --target prod --force-lock
