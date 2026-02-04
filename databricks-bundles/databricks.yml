@@ -6,11 +6,17 @@ targets:
     mode: development
     workspace:
       host: https://adb-7405617333572408.8.azuredatabricks.net
-    
+    sync:
+      include:
+        - "src/*"
+  
   prod:
     mode: production
     workspace:
       host: https://adb-7405616246068137.17.azuredatabricks.net
+    sync:
+      include:
+        - "src/*"
 
 resources:
   jobs:
