@@ -32,7 +32,7 @@ jobs:
           DATABRICKS_HOST: https://adb-7405617333572408.8.azuredatabricks.net
           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
-          DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
+          DATABRICKS_AZURE_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
           DATABRICKS_AUTH_TYPE: azure-client-secret
         run: |
           export PATH=$PATH:$HOME/.databricks/bin
@@ -58,7 +58,7 @@ jobs:
           DATABRICKS_HOST: https://adb-7405616246068137.17.azuredatabricks.net
           DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
           DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
-          DATABRICKS_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
+          DATABRICKS_AZURE_TENANT_ID: ${{ secrets.DATABRICKS_TENANT_ID }}
           DATABRICKS_AUTH_TYPE: azure-client-secret
         run: |
           export PATH=$PATH:$HOME/.databricks/bin
