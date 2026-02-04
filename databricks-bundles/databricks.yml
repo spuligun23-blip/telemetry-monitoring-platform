@@ -11,6 +11,7 @@ targets:
     mode: production
     workspace:
       host: https://adb-7405616246068137.17.azuredatabricks.net
+      root_path: /Shared/bundle-deployments/${bundle.name}/${bundle.target}
 
 resources:
   jobs:
