@@ -18,13 +18,13 @@ resources:
       name: ${bundle.target}-hello-job
       
       schedule:
-        quartz_cron_expression: "0 0 9 * * ?"  # Daily at 9 AM
+        quartz_cron_expression: "0 0 9 * * ?"
         timezone_id: "America/New_York"
       
       tasks:
         - task_key: say_hello
           notebook_task:
-            notebook_path: ./src/hello
+            notebook_path: src/hello.py
             source: WORKSPACE
           
           new_cluster:
@@ -35,4 +35,5 @@ resources:
               spark.databricks.cluster.profile: singleNode
               spark.master: local[*]
             custom_tags:
+              ResourceClass: SingleNode
               Environment: ${bundle.target}
