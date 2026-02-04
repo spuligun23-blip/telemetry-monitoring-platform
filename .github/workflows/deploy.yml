@@ -41,7 +41,7 @@ jobs:
           auth_type = azure-client-secret
           EOF
           
-          databricks bundle deploy --target dev
+          databricks bundle deploy --target dev --force-lock
           
   deploy-prod:
     name: Deploy to PROD
@@ -72,4 +72,4 @@ jobs:
           auth_type = azure-client-secret
           EOF
           
-          databricks bundle deploy --target prod
+          databricks bundle deploy --target prod --force-lock
